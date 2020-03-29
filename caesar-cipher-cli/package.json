@@ -1,0 +1,16 @@
+{
+  "name": "nodejs-course",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "caesar-cipher-cli": "./bin/index.js"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "author": "Yury Lapitski",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^5.0.0"
+  }
+}
