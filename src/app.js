@@ -1,11 +1,21 @@
 const express = require('express');
+const { handleError } = require('./lib/error-handler');
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const YAML = require('yamljs');
 const userRouter = require('./resources/users/user.router');
+const NodeInjectionMiddleware = require('node-dependency-injection-express-middleware')
+  .default;
 
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
+
+const options = {
+  serviceFilePath: path.join(__dirname, './common/service.yaml'),
+  containerReferenceAsService: true,
+  defaultDir: path.join(__dirname, './resources')
+};
+app.use(new NodeInjectionMiddleware(options).middleware());
 
 app.use(express.json());
 
@@ -20,5 +30,9 @@ app.use('/', (req, res, next) => {
 });
 
 app.use('/users', userRouter);
+
+app.use((err, req, res, next) => {
+  handleError(err, res);
+});
 
 module.exports = app;

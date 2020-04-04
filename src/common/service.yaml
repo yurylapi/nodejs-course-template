@@ -1,0 +1,9 @@
+services:
+  user.repository:
+    class: "users/user.memory.repository"
+    arguments: ["@user.data-mapper"]
+  user.service:
+    class: "users/user.service"
+    arguments: ["@user.repository"]
+  user.data-mapper:
+    class: "users/user.data-mapper"

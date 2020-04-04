@@ -1,5 +1,23 @@
-const usersRepo = require('./user.memory.repository');
+class UserService {
+  constructor(UserMemoryRepository) {
+    this.userRepository = UserMemoryRepository;
+  }
 
-const getAll = () => usersRepo.getAll();
+  async getAll() {
+    return this.userRepository.getAll();
+  }
 
-module.exports = { getAll };
+  async create(userData) {
+    return this.userRepository.save(userData);
+  }
+
+  async update(id, userData) {
+    return this.userRepository.update(id, userData);
+  }
+
+  async getById(id) {
+    return this.userRepository.getById(id);
+  }
+}
+
+module.exports.default = UserService;
