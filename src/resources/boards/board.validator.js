@@ -1,8 +1,8 @@
-const { body, param, validationResult } = require('express-validator');
+const { check, body, param, validationResult } = require('express-validator');
 const { ErrorHandler } = require('../../lib/error-handler');
 
 module.exports = {
-  userIdValidation: [
+  boardIdValidation: [
     param('id')
       .not()
       .isEmpty()
@@ -10,16 +10,23 @@ module.exports = {
       .trim()
       .escape()
   ],
-  userRequestValidation: [
-    body(['name', 'login'])
+  boardValidation: [
+    body('title')
       .not()
       .isEmpty()
       .trim()
       .escape(),
-    body('password')
-      .isLength({ min: 5 })
+    body('columns').isArray({ min: 1 })
+  ],
+  columnValidation: [
+    check('columns.*.title')
+      .not()
+      .isEmpty()
       .trim()
-      .escape()
+      .escape(),
+    check('columns.*.order')
+      .optional()
+      .isInt()
   ],
   validate: async (req, message) => {
     const errors = validationResult(req);

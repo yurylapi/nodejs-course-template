@@ -18,6 +18,10 @@ class UserService {
   async getById(id) {
     return this.userRepository.getById(id);
   }
+
+  async delete(id) {
+    return this.userRepository.delete(id);
+  }
 }
 
 module.exports.default = UserService;

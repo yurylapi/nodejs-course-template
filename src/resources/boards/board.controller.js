@@ -1,10 +1,10 @@
-const { validate } = require('./user.validator');
+const { validate } = require('./board.validator');
 
 const indexAction = async (req, res) => {
   const container = req.container;
-  const usersService = container.get('user.service');
-  const users = await usersService.getAll();
-  res.json(users);
+  const boardService = container.get('board.service');
+  const boards = await boardService.getAll();
+  res.json(boards);
 };
 
 const createAction = async (req, res, next) => {
@@ -15,21 +15,21 @@ const createAction = async (req, res, next) => {
   }
 
   const container = req.container;
-  const usersService = container.get('user.service');
-  const userData = req.body;
-  const user = await usersService.create(userData);
-  res.json(user);
+  const boardService = container.get('board.service');
+  const boardData = req.body;
+  const board = await boardService.create(boardData);
+  res.json(board);
 };
 
 const updateAction = async (req, res, next) => {
   try {
     await validate(req);
     const id = req.params.id;
-    const userData = req.body;
+    const boardData = req.body;
     const container = req.container;
-    const usersService = container.get('user.service');
-    const user = await usersService.update(id, userData);
-    res.json(user);
+    const boardService = container.get('board.service');
+    const board = await boardService.update(id, boardData);
+    res.json(board);
   } catch (err) {
     return next(err);
   }
@@ -40,8 +40,8 @@ const deleteAction = async (req, res, next) => {
     await validate(req);
     const id = req.params.id;
     const container = req.container;
-    const usersService = container.get('user.service');
-    await usersService.delete(id);
+    const boardService = container.get('board.service');
+    await boardService.delete(id);
     res.sendStatus(204);
   } catch (err) {
     return next(err);
@@ -53,15 +53,15 @@ const getByIdAction = async (req, res, next) => {
     await validate(req);
     const id = req.params.id;
     const container = req.container;
-    const usersService = container.get('user.service');
-    const user = await usersService.getById(id);
-    res.json(user);
+    const boardService = container.get('board.service');
+    const board = await boardService.getById(id);
+    res.json(board);
   } catch (err) {
     return next(err);
   }
 };
 
-const userController = {
+const boardController = {
   indexAction,
   getByIdAction,
   createAction,
@@ -69,4 +69,4 @@ const userController = {
   deleteAction
 };
 
-module.exports = userController;
+module.exports = boardController;

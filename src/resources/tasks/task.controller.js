@@ -1,10 +1,10 @@
-const { validate } = require('./user.validator');
+const { validate } = require('./task.validator');
 
 const indexAction = async (req, res) => {
   const container = req.container;
-  const usersService = container.get('user.service');
-  const users = await usersService.getAll();
-  res.json(users);
+  const taskService = container.get('task.service');
+  const tasks = await taskService.getAll();
+  res.json(tasks);
 };
 
 const createAction = async (req, res, next) => {
@@ -15,21 +15,21 @@ const createAction = async (req, res, next) => {
   }
 
   const container = req.container;
-  const usersService = container.get('user.service');
-  const userData = req.body;
-  const user = await usersService.create(userData);
-  res.json(user);
+  const taskService = container.get('task.service');
+  const taskData = req.body;
+  const task = await taskService.create(taskData);
+  res.json(task);
 };
 
 const updateAction = async (req, res, next) => {
   try {
     await validate(req);
     const id = req.params.id;
-    const userData = req.body;
+    const taskData = req.body;
     const container = req.container;
-    const usersService = container.get('user.service');
-    const user = await usersService.update(id, userData);
-    res.json(user);
+    const taskService = container.get('task.service');
+    const task = await taskService.update(id, taskData);
+    res.json(task);
   } catch (err) {
     return next(err);
   }
@@ -40,8 +40,8 @@ const deleteAction = async (req, res, next) => {
     await validate(req);
     const id = req.params.id;
     const container = req.container;
-    const usersService = container.get('user.service');
-    await usersService.delete(id);
+    const taskService = container.get('task.service');
+    await taskService.delete(id);
     res.sendStatus(204);
   } catch (err) {
     return next(err);
@@ -53,15 +53,15 @@ const getByIdAction = async (req, res, next) => {
     await validate(req);
     const id = req.params.id;
     const container = req.container;
-    const usersService = container.get('user.service');
-    const user = await usersService.getById(id);
-    res.json(user);
+    const taskService = container.get('task.service');
+    const task = await taskService.getById(id);
+    res.json(task);
   } catch (err) {
     return next(err);
   }
 };
 
-const userController = {
+const taskController = {
   indexAction,
   getByIdAction,
   createAction,
@@ -69,4 +69,4 @@ const userController = {
   deleteAction
 };
 
-module.exports = userController;
+module.exports = taskController;

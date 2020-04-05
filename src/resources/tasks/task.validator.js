@@ -2,7 +2,7 @@ const { body, param, validationResult } = require('express-validator');
 const { ErrorHandler } = require('../../lib/error-handler');
 
 module.exports = {
-  userIdValidation: [
+  taskIdValidation: [
     param('id')
       .not()
       .isEmpty()
@@ -10,14 +10,25 @@ module.exports = {
       .trim()
       .escape()
   ],
-  userRequestValidation: [
-    body(['name', 'login'])
+  taskValidation: [
+    body('title')
       .not()
       .isEmpty()
       .trim()
       .escape(),
-    body('password')
-      .isLength({ min: 5 })
+    body('order')
+      .optional()
+      .isInt(),
+    body('title')
+      .optional()
+      .not()
+      .isEmpty()
+      .trim()
+      .escape(),
+    body('userId')
+      .not()
+      .isEmpty()
+      .isUUID()
       .trim()
       .escape()
   ],

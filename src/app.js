@@ -4,6 +4,8 @@ const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const YAML = require('yamljs');
 const userRouter = require('./resources/users/user.router');
+const boardRouter = require('./resources/boards/board.router');
+const taskRouter = require('./resources/tasks/task.router');
 const NodeInjectionMiddleware = require('node-dependency-injection-express-middleware')
   .default;
 
@@ -30,6 +32,8 @@ app.use('/', (req, res, next) => {
 });
 
 app.use('/users', userRouter);
+app.use('/boards', boardRouter);
+app.use('/boards/:id/tasks', taskRouter);
 
 app.use((err, req, res, next) => {
   handleError(err, res);
