@@ -1,6 +1,7 @@
 class UserService {
-  constructor(UserMemoryRepository) {
+  constructor(UserMemoryRepository, TaskMemoryRepository) {
     this.userRepository = UserMemoryRepository;
+    this.taskRepository = TaskMemoryRepository;
   }
 
   async getAll() {
@@ -19,8 +20,13 @@ class UserService {
     return this.userRepository.getById(id);
   }
 
-  async delete(id) {
-    return this.userRepository.delete(id);
+  async delete(userId) {
+    await this.userRepository.delete(userId);
+    const tasks = await this.taskRepository.getAll();
+    tasks.map(async task => {
+      task.setUserId(null);
+      await this.taskRepository.update(task);
+    });
   }
 }
 

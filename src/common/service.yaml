@@ -4,7 +4,7 @@ services:
     arguments: ["@user.data-mapper"]
   user.service:
     class: "users/user.service"
-    arguments: ["@user.repository"]
+    arguments: ["@user.repository", "@task.repository"]
   user.data-mapper:
     class: "users/user.data-mapper"
 
@@ -13,7 +13,7 @@ services:
     arguments: ["@board.data-mapper"]
   board.service:
     class: "boards/board.service"
-    arguments: ["@board.repository"]
+    arguments: ["@board.repository", "@task.repository"]
   board.data-mapper:
     class: "boards/board.data-mapper"
 
@@ -22,6 +22,6 @@ services:
     arguments: ["@task.data-mapper"]
   task.service:
     class: "tasks/task.service"
-    arguments: ["@task.repository"]
+    arguments: ["@task.repository", "@board.repository"]
   task.data-mapper:
     class: "tasks/task.data-mapper"

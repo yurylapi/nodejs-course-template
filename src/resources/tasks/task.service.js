@@ -1,21 +1,27 @@
 class TaskService {
-  constructor(TaskMemoryRepository) {
+  constructor(TaskMemoryRepository, BoardMemoryRepository) {
     this.taskRepository = TaskMemoryRepository;
+    this.boardRepository = BoardMemoryRepository;
   }
 
   async getAll() {
     return this.taskRepository.getAll();
   }
 
-  async create(userData) {
-    return this.taskRepository.save(userData);
+  async create(boardId, taskData) {
+    const board = await this.boardRepository.getById(boardId).catch(err => {
+      throw err;
+    });
+
+    taskData = { ...taskData, boardId: board.getId() };
+    return this.taskRepository.save(taskData);
   }
 
-  async update(id, userData) {
-    return this.taskRepository.update(id, userData);
+  async update(boardId, id, taskData) {
+    return this.taskRepository.update(id, taskData);
   }
 
-  async getById(id) {
+  async getById(boardId, id) {
     return this.taskRepository.getById(id);
   }
 

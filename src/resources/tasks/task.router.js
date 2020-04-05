@@ -1,19 +1,35 @@
-const router = require('express').Router();
+const router = require('express').Router({ mergeParams: true });
 const taskController = require('./task.controller');
-const { taskIdValidation, taskValidation } = require('./task.validator');
+const {
+  taskIdValidation,
+  taskValidation,
+  boardIdValidation
+} = require('./task.validator');
 
 router.get('/', taskController.indexAction);
 
-router.get('/:id', taskIdValidation, taskController.getByIdAction);
+router.get(
+  '/:id',
+  [...boardIdValidation, ...taskIdValidation],
+  taskController.getByIdAction
+);
 
 router.put(
   '/:id',
-  [...taskIdValidation, ...taskValidation],
+  [...boardIdValidation, ...taskIdValidation, ...taskValidation],
   taskController.updateAction
 );
 
-router.delete('/:id', taskIdValidation, taskController.deleteAction);
+router.delete(
+  '/:id',
+  [...boardIdValidation, ...taskIdValidation],
+  taskController.deleteAction
+);
 
-router.post('/', [...taskValidation], taskController.createAction);
+router.post(
+  '/',
+  [...boardIdValidation, ...taskValidation],
+  taskController.createAction
+);
 
 module.exports = router;

@@ -10,6 +10,14 @@ module.exports = {
       .trim()
       .escape()
   ],
+  boardIdValidation: [
+    param('boardId')
+      .not()
+      .isEmpty()
+      .isUUID()
+      .trim()
+      .escape()
+  ],
   taskValidation: [
     body('title')
       .not()
@@ -25,7 +33,7 @@ module.exports = {
       .isEmpty()
       .trim()
       .escape(),
-    body('userId')
+    body(['userId', 'columnId'])
       .not()
       .isEmpty()
       .isUUID()

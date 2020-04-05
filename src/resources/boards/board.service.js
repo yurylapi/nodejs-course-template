@@ -1,26 +1,35 @@
 class BoardService {
-  constructor(BoardMemoryRepository) {
+  constructor(BoardMemoryRepository, TaskMemoryRepository) {
     this.boardRepository = BoardMemoryRepository;
+    this.taskRepository = TaskMemoryRepository;
   }
 
   async getAll() {
     return this.boardRepository.getAll();
   }
 
-  async create(userData) {
-    return this.boardRepository.save(userData);
+  async create(boardData) {
+    return this.boardRepository.save(boardData);
   }
 
-  async update(id, userData) {
-    return this.boardRepository.update(id, userData);
+  async update(boardId, boardData) {
+    return this.boardRepository.update(boardId, boardData);
   }
 
-  async getById(id) {
-    return this.boardRepository.getById(id);
+  async getById(boardId) {
+    return this.boardRepository.getById(boardId).catch(err => {
+      throw err;
+    });
   }
 
-  async delete(id) {
-    return this.boardRepository.delete(id);
+  async delete(boardId) {
+    const tasks = await this.taskRepository.getAll();
+    tasks.map(async task => {
+      if (task.getBoardId() === boardId) {
+        await this.taskRepository.delete(task.getId());
+      }
+    });
+    return this.boardRepository.delete(boardId);
   }
 }
 
