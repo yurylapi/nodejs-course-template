@@ -6,43 +6,64 @@ class Task {
     title,
     order = 0,
     description = '',
-    userId,
+    userId = null,
     boardId,
-    columnId
+    columnId = null
   } = {}) {
     this.id = id;
     this.title = title;
     this.order = order;
     this.description = description;
-    this.userId = userId;
+    this.userId = userId ? userId : null;
     this.boardId = boardId;
-    this.columnId = columnId;
+    this.columnId = columnId ? userId : null;
   }
 
+  /**
+   * @return {String}
+   */
   getDescription() {
     return this.description;
   }
 
+  /**
+   * @return {Number}
+   */
   getOrder() {
     return this.order;
   }
 
+  /**
+   * @return {String}
+   */
   getTitle() {
     return this.title;
   }
 
+  /**
+   * @return {String}
+   */
   getId() {
     return this.id;
   }
 
+  /**
+   * @returns {String|null}
+   */
   getUserId() {
     return this.userId;
   }
 
+  /**
+   * @returns {String}
+   */
   getBoardId() {
     return this.boardId;
   }
 
+  /**
+   * @returns {String|null}
+   */
   getColumnId() {
     return this.columnId;
   }

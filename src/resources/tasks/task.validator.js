@@ -1,12 +1,10 @@
-const { body, param, validationResult } = require('express-validator');
-const { ErrorHandler } = require('../../lib/error-handler');
+const { body, param } = require('express-validator');
 
 module.exports = {
   taskIdValidation: [
     param('id')
       .not()
       .isEmpty()
-      .isUUID()
       .trim()
       .escape()
   ],
@@ -34,16 +32,8 @@ module.exports = {
       .trim()
       .escape(),
     body(['userId', 'columnId'])
-      .not()
-      .isEmpty()
-      .isUUID()
+      .optional()
       .trim()
       .escape()
-  ],
-  validate: async (req, message) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw new ErrorHandler(400, message, errors.array());
-    }
-  }
+  ]
 };

@@ -1,5 +1,4 @@
-const { check, body, param, validationResult } = require('express-validator');
-const { ErrorHandler } = require('../../lib/error-handler');
+const { check, body, param } = require('express-validator');
 
 module.exports = {
   boardIdValidation: [
@@ -27,11 +26,5 @@ module.exports = {
     check('columns.*.order')
       .optional()
       .isInt()
-  ],
-  validate: async (req, message) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw new ErrorHandler(400, message, errors.array());
-    }
-  }
+  ]
 };

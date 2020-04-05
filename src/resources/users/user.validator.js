@@ -1,5 +1,4 @@
-const { body, param, validationResult } = require('express-validator');
-const { ErrorHandler } = require('../../lib/error-handler');
+const { body, param } = require('express-validator');
 
 module.exports = {
   userIdValidation: [
@@ -20,11 +19,5 @@ module.exports = {
       .isLength({ min: 5 })
       .trim()
       .escape()
-  ],
-  validate: async (req, message) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw new ErrorHandler(400, message, errors.array());
-    }
-  }
+  ]
 };

@@ -8,14 +8,23 @@ class Board {
     this.columns = columns.map(column => new BoardColumn(column));
   }
 
+  /**
+   * @return {BoardColumn[]}
+   */
   getColumns() {
     return this.columns;
   }
 
+  /**
+   * @return {String}
+   */
   getTitle() {
     return this.title;
   }
 
+  /**
+   * @return {String}
+   */
   getId() {
     return this.id;
   }

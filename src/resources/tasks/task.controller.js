@@ -1,4 +1,4 @@
-const { validate } = require('./task.validator');
+const { validate } = require('../../lib/request.validator');
 
 const indexAction = async (req, res) => {
   const container = req.container;
@@ -28,6 +28,7 @@ const updateAction = async (req, res, next) => {
     const taskData = req.body;
     const container = req.container;
     const taskService = container.get('task.service');
+    const boardId = req.params.boardId;
     const task = await taskService.update(boardId, id, taskData);
     res.json(task);
   } catch (err) {

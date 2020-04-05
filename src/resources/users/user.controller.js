@@ -1,4 +1,4 @@
-const { validate } = require('./user.validator');
+const { validate } = require('../../lib/request.validator');
 
 const indexAction = async (req, res) => {
   const container = req.container;

@@ -22,11 +22,18 @@ class UserService {
 
   async delete(userId) {
     await this.userRepository.delete(userId);
+    await this._updateTasks(userId);
+  }
+
+  async _updateTasks(userId) {
     const tasks = await this.taskRepository.getAll();
+
     tasks.map(async task => {
-      if (task.getUserId === userId) {
+      if (task.getUserId() === userId) {
         task.setUserId(null);
-        await this.taskRepository.update(task);
+        await this.taskRepository
+          .update(task)
+          .catch(err => console.log(err.message));
       }
     });
   }
