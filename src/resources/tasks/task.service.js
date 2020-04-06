@@ -25,7 +25,7 @@ class TaskService {
     return this.taskRepository.getById(id);
   }
 
-  async delete(id) {
+  async delete(boardId, id) {
     return this.taskRepository.delete(id);
   }
 }
