@@ -1,5 +1,6 @@
 const express = require('express');
 const { handleError } = require('./lib/error-handler');
+const { reqLoggerMiddleware } = require('./lib/logger');
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const YAML = require('yamljs');

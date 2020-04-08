@@ -2,13 +2,21 @@ class ErrorHandler extends Error {
   constructor(statusCode, message, data) {
     super();
     this.message = message;
-    this.statusCode = statusCode;
+    this.statusCode = statusCode || 500;
     this.data = data;
   }
 }
 
-const handleError = (err, res) => {
-  const { statusCode, message, data } = err;
+const catchErrors = fn => async (req, res, next) => {
+  try {
+    return await fn(req, res, next);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+const handleError = (req, res) => {
+  const { statusCode = 500, message, data } = req;
   res.status(statusCode).json({
     statusCode,
     message,
@@ -18,5 +26,6 @@ const handleError = (err, res) => {
 
 module.exports = {
   ErrorHandler,
-  handleError
+  handleError,
+  catchErrors
 };
