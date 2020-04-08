@@ -28,13 +28,15 @@ class UserService {
   async _updateTasks(userId) {
     const tasks = await this.taskRepository.getAll();
 
-    tasks.map(async task => {
-      if (task.getUserId() === userId) {
-        task.setUserId(null);
-        await this.taskRepository
-          .update(task)
-          .catch(err => console.log(err.message));
-      }
+    Promise.all(
+      tasks.map(async task => {
+        if (task.getUserId() === userId) {
+          task.setUserId(null);
+          await this.taskRepository.update(task.getId(), task);
+        }
+      })
+    ).catch(err => {
+      throw err;
     });
   }
 }
