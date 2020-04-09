@@ -11,38 +11,33 @@ const indexAction = catchErrors(async (req, res) => {
 
 const createAction = catchErrors(async (req, res) => {
   await validate(req);
-  const container = req.container;
+  const { container, body: userData } = req;
   const usersService = container.get('user.service');
-  const userData = req.body;
   const user = await usersService.create(userData);
   res.status(200).json(user);
 });
 
 const updateAction = catchErrors(async (req, res) => {
   await validate(req);
-  const id = req.params.id;
-  const userData = req.body;
-  const container = req.container;
+  const { params, container, body: userData } = req;
   const usersService = container.get('user.service');
-  const user = await usersService.update(id, userData);
+  const user = await usersService.update(params.id, userData);
   res.status(200).json(user);
 });
 
 const deleteAction = catchErrors(async (req, res) => {
   await validate(req);
-  const id = req.params.id;
-  const container = req.container;
+  const { params, container } = req;
   const usersService = container.get('user.service');
-  await usersService.delete(id);
+  await usersService.delete(params.id);
   res.sendStatus(204);
 });
 
 const getByIdAction = catchErrors(async (req, res) => {
   await validate(req);
-  const id = req.params.id;
-  const container = req.container;
+  const { params, container } = req;
   const usersService = container.get('user.service');
-  const user = await usersService.getById(id);
+  const user = await usersService.getById(params.id);
   res.status(200).json(user);
 });
 

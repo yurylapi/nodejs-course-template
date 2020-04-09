@@ -11,38 +11,33 @@ const indexAction = catchErrors(async (req, res) => {
 
 const createAction = catchErrors(async (req, res) => {
   await validate(req);
-  const container = req.container;
+  const { container, body: boardData } = req;
   const boardService = container.get('board.service');
-  const boardData = req.body;
   const board = await boardService.create(boardData);
   res.status(200).json(board);
 });
 
 const updateAction = catchErrors(async (req, res) => {
   await validate(req);
-  const id = req.params.id;
-  const boardData = req.body;
-  const container = req.container;
+  const { params, container, body: boardData } = req;
   const boardService = container.get('board.service');
-  const board = await boardService.update(id, boardData);
+  const board = await boardService.update(params.id, boardData);
   res.status(200).json(board);
 });
 
 const deleteAction = catchErrors(async (req, res) => {
   await validate(req);
-  const id = req.params.id;
-  const container = req.container;
+  const { params, container } = req;
   const boardService = container.get('board.service');
-  await boardService.delete(id);
+  await boardService.delete(params.id);
   res.sendStatus(204);
 });
 
 const getByIdAction = catchErrors(async (req, res) => {
   await validate(req);
-  const id = req.params.id;
-  const container = req.container;
+  const { params, container } = req;
   const boardService = container.get('board.service');
-  const board = await boardService.getById(id);
+  const board = await boardService.getById(params.id);
   res.status(200).json(board);
 });
 
