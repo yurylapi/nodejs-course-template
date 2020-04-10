@@ -45,9 +45,12 @@
     "esm": "^3.2.25",
     "express": "4.17.1",
     "express-validator": "^6.4.0",
+    "http-status-codes": "^1.4.0",
+    "morgan": "^1.10.0",
     "node-dependency-injection-express-middleware": "^1.2.1",
     "swagger-ui-express": "4.1.2",
     "uuid": "3.3.3",
+    "winston": "^3.2.1",
     "yamljs": "0.3.0"
   },
   "devDependencies": {

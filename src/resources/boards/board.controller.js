@@ -1,65 +1,45 @@
 const { validate } = require('../../lib/request.validator');
+const { catchErrors } = require('../../lib/error-handler');
 
-const indexAction = async (req, res) => {
+const indexAction = catchErrors(async (req, res) => {
+  await validate(req);
   const container = req.container;
   const boardService = container.get('board.service');
   const boards = await boardService.getAll();
-  res.json(boards);
-};
+  res.status(200).json(boards);
+});
 
-const createAction = async (req, res, next) => {
-  try {
-    await validate(req);
-  } catch (err) {
-    return next(err);
-  }
-
-  const container = req.container;
+const createAction = catchErrors(async (req, res) => {
+  await validate(req);
+  const { container, body: boardData } = req;
   const boardService = container.get('board.service');
-  const boardData = req.body;
   const board = await boardService.create(boardData);
-  res.json(board);
-};
+  res.status(200).json(board);
+});
 
-const updateAction = async (req, res, next) => {
-  try {
-    await validate(req);
-    const id = req.params.id;
-    const boardData = req.body;
-    const container = req.container;
-    const boardService = container.get('board.service');
-    const board = await boardService.update(id, boardData);
-    res.json(board);
-  } catch (err) {
-    return next(err);
-  }
-};
+const updateAction = catchErrors(async (req, res) => {
+  await validate(req);
+  const { params, container, body: boardData } = req;
+  const boardService = container.get('board.service');
+  const board = await boardService.update(params.id, boardData);
+  res.status(200).json(board);
+});
 
-const deleteAction = async (req, res, next) => {
-  try {
-    await validate(req);
-    const id = req.params.id;
-    const container = req.container;
-    const boardService = container.get('board.service');
-    await boardService.delete(id);
-    res.sendStatus(204);
-  } catch (err) {
-    return next(err);
-  }
-};
+const deleteAction = catchErrors(async (req, res) => {
+  await validate(req);
+  const { params, container } = req;
+  const boardService = container.get('board.service');
+  await boardService.delete(params.id);
+  res.sendStatus(204);
+});
 
-const getByIdAction = async (req, res, next) => {
-  try {
-    await validate(req);
-    const id = req.params.id;
-    const container = req.container;
-    const boardService = container.get('board.service');
-    const board = await boardService.getById(id);
-    res.json(board);
-  } catch (err) {
-    return next(err);
-  }
-};
+const getByIdAction = catchErrors(async (req, res) => {
+  await validate(req);
+  const { params, container } = req;
+  const boardService = container.get('board.service');
+  const board = await boardService.getById(params.id);
+  res.status(200).json(board);
+});
 
 const boardController = {
   indexAction,
