@@ -31,10 +31,10 @@ const logger = createLogger({
 });
 
 const reqLoggerMiddleware = (req, res, next) => {
-  const { url: reqUrl, params: reqParams, body: reqBody } = req;
+  const { url: reqUrl, query: reqQueryParams, body: reqBody } = req;
   logger.info('Request logger middleware', {
     url: reqUrl,
-    params: reqParams,
+    queryParams: reqQueryParams,
     body: reqBody
   });
   next();

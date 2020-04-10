@@ -1,13 +1,10 @@
 const router = require('express').Router({ mergeParams: true });
 const taskController = require('./task.controller');
-const { reqLoggerMiddleware } = require('../../lib/logger');
 const {
   taskIdValidation,
   taskValidation,
   boardIdValidation
 } = require('./task.validator');
-
-router.all('*', reqLoggerMiddleware);
 
 router.get('/', taskController.indexAction);
 

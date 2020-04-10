@@ -1,13 +1,10 @@
 const router = require('express').Router();
 const boardController = require('./board.controller');
-const { reqLoggerMiddleware } = require('../../lib/logger');
 const {
   boardIdValidation,
   boardValidation,
   columnValidation
 } = require('./board.validator');
-
-router.all('*', reqLoggerMiddleware);
 
 router.get('/', boardController.indexAction);
 

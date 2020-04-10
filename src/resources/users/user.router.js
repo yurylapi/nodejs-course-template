@@ -1,12 +1,6 @@
 const router = require('express').Router();
 const userController = require('./user.controller');
 const { userIdValidation, userRequestValidation } = require('./user.validator');
-const { reqLoggerMiddleware } = require('../../lib/logger');
-
-/**
- * Middleware for logging request data
- */
-router.all('*', reqLoggerMiddleware);
 
 /**
  * @api {get} /users Get all users

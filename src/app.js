@@ -6,6 +6,7 @@ const {
   handleError,
   handleInternalError
 } = require('./lib/error-handler');
+const { reqLoggerMiddleware } = require('./lib/logger');
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const YAML = require('yamljs');
@@ -46,6 +47,8 @@ app.use('/', (req, res, next) => {
   }
   next();
 });
+
+app.use(reqLoggerMiddleware);
 
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
