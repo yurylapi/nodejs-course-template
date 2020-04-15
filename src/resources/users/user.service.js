@@ -1,7 +1,7 @@
 class UserService {
-  constructor(UserMemoryRepository, TaskMemoryRepository) {
-    this.userRepository = UserMemoryRepository;
-    this.taskRepository = TaskMemoryRepository;
+  constructor(UserRepository, TaskRepository) {
+    this.userRepository = UserRepository;
+    this.taskRepository = TaskRepository;
   }
 
   async getAll() {

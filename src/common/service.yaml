@@ -1,12 +1,14 @@
 services:
   user.repository:
-    class: "users/user.memory.repository"
-    arguments: ["@user.data-mapper"]
+    class: "users/user.repository"
+    arguments: ["@user.model", "@user.data-mapper"]
   user.service:
     class: "users/user.service"
     arguments: ["@user.repository", "@task.repository"]
   user.data-mapper:
     class: "users/user.data-mapper"
+  user.model:
+    class: "users/user.model"
 
   board.repository:
     class: "boards/board.memory.repository"
