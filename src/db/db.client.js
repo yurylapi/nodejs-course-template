@@ -1,4 +1,4 @@
-const User = require('../resources/users/user.model').default;
+const UserModel = require('../resources/users/user.model');
 const Board = require('../resources/boards/board.model');
 const Task = require('../resources/tasks/task.model');
 const mongoose = require('mongoose');
@@ -31,12 +31,12 @@ const tasks = [...new Array(5)].map((_, idx) => {
   });
 });
 const users = [
-  new User({
+  new UserModel({
     name: 'user1',
     login: 'admin',
     password: 'admin'
   }),
-  new User({
+  new UserModel({
     name: 'user2',
     login: 'login2',
     password: 'password2'
@@ -46,7 +46,8 @@ const users = [
 const connectionToDb = callback => {
   mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
   });
 
   const db = mongoose.connection;

@@ -24,7 +24,7 @@ const catchErrors = fn => async (req, res, next) => {
 
 const handleError = (req, res) => {
   const { statusCode = BAD_REQUEST, message, data } = req;
-  logger.error(getStatusText(statusCode), req);
+  logger.error(req);
   res.status(statusCode).json({
     statusCode,
     message,

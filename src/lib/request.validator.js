@@ -5,8 +5,8 @@ const { BAD_REQUEST, getStatusText } = require('http-status-codes');
 module.exports = {
   validate: async req => {
     const errors = validationResult(req);
-    const status = BAD_REQUEST;
     if (!errors.isEmpty()) {
+      const status = BAD_REQUEST;
       throw new ErrorHandler(status, getStatusText(status), errors.array());
     }
   }

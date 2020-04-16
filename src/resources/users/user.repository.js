@@ -1,30 +1,40 @@
-const User = require('./user.model');
-
 class UserRepository {
   /**
-   * @param UserModel
    * @param UserDataMapper
    */
-  constructor(UserModel, UserDataMapper) {
-    this.userModel = UserModel;
+  constructor(UserDataMapper) {
+    this.userModel = require('./user.model'); // TODO: re-consider this solution
     this.userDataMapper = UserDataMapper;
   }
 
   async getAll() {
-    const users = await User.find({});
-    return this.userModel.find({});
+    const users = await this.userModel.find({}).exec();
+    return users.map(user => this.userDataMapper.toDomain(user));
   }
 
   async getById(id) {
-    return this.userModel.findById(id).exec();
+    const user = await this.userModel.findById(id).exec();
+    return this.userDataMapper.toDomain(user);
   }
 
   async getUserByProps(props) {
-    throw new Error();
+    return this.userModel.find(props);
   }
 
-  async save(user) {
+  async update(userId, user) {
+    const updatedUser = await this.userModel.findByIdAndUpdate(userId, user, {
+      new: true
+    });
+    return this.userDataMapper.toDomain(updatedUser);
+  }
+
+  async create(user) {
     const createdUser = await this.userModel.create(user);
+    return this.userDataMapper.toDomain(createdUser);
+  }
+
+  async delete(id) {
+    return this.userModel.findOneAndDelete({ _id: id });
   }
 }
 

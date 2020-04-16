@@ -10,6 +10,7 @@ const { reqLoggerMiddleware } = require('./lib/logger');
 const swaggerUI = require('swagger-ui-express');
 const path = require('path');
 const YAML = require('yamljs');
+const helmet = require('helmet');
 const userRouter = require('./resources/users/user.router');
 const boardRouter = require('./resources/boards/board.router');
 const taskRouter = require('./resources/tasks/task.router');
@@ -23,8 +24,10 @@ const accessLogStream = fs.createWriteStream(
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
+app.use(helmet());
+
 const options = {
-  serviceFilePath: path.join(__dirname, './common/service.yaml'),
+  serviceFilePath: path.join(__dirname, './common/services.yaml'),
   containerReferenceAsService: true,
   defaultDir: path.join(__dirname, './resources')
 };
