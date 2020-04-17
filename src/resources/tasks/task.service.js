@@ -1,7 +1,9 @@
+const { NOT_FOUND, getStatusText } = require('http-status-codes');
+const { ErrorHandler } = require('../../lib/error-handler');
+
 class TaskService {
-  constructor(TaskMemoryRepository, BoardMemoryRepository) {
-    this.taskRepository = TaskMemoryRepository;
-    this.boardRepository = BoardMemoryRepository;
+  constructor(TaskRepository) {
+    this.taskRepository = TaskRepository;
   }
 
   async getAll() {
@@ -9,24 +11,37 @@ class TaskService {
   }
 
   async create(boardId, taskData) {
-    const board = await this.boardRepository.getById(boardId).catch(err => {
-      throw err;
-    });
-
-    taskData = { ...taskData, boardId: board.getId() };
-    return this.taskRepository.save(taskData);
+    taskData = { ...taskData, boardId };
+    return this.taskRepository.create(taskData);
   }
 
-  async update(boardId, id, taskData) {
-    return this.taskRepository.update(id, taskData);
+  async update(taskId, taskData) {
+    const task = await this.taskRepository.getById(taskId);
+    await this._validateTask(task);
+    return this.taskRepository.update(taskId, taskData);
   }
 
-  async getById(boardId, id) {
-    return this.taskRepository.getById(id);
+  async getById(taskId) {
+    const task = await this.taskRepository.getById(taskId);
+    await this._validateTask(task);
+    return task;
   }
 
-  async delete(boardId, id) {
-    return this.taskRepository.delete(id);
+  async delete(taskId) {
+    const task = await this.taskRepository.getById(taskId);
+    await this._validateTask(task);
+    return this.taskRepository.delete(taskId);
+  }
+
+  /**
+   * @param {Object} task
+   * @return {Promise<void>}
+   * @private
+   */
+  async _validateTask(task) {
+    if (typeof task !== 'object' || !task) {
+      throw new ErrorHandler(NOT_FOUND, getStatusText(NOT_FOUND));
+    }
   }
 }
 

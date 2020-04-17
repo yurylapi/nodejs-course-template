@@ -34,13 +34,28 @@ class BoardService {
   async delete(boardId) {
     const board = await this.boardRepository.getById(boardId);
     await this._validateBoard(board);
+    const result = await this.boardRepository.delete(boardId);
+    await this._deleteTasks(boardId);
+    return result;
+  }
+
+  /**
+   * @param {String} boardId
+   * @returns {Promise<void>}
+   * @private
+   */
+  async _deleteTasks(boardId) {
     const tasks = await this.taskService.getAll();
-    tasks.map(async task => {
-      if (task.getBoardId() === boardId) {
-        await this.taskService.delete(task.getId());
-      }
+
+    Promise.all(
+      tasks.map(async task => {
+        if (task.boardId === boardId) {
+          await this.taskService.delete(task.id);
+        }
+      })
+    ).catch(err => {
+      throw err;
     });
-    return this.boardRepository.delete(boardId);
   }
 
   /**

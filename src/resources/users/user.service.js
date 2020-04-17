@@ -34,14 +34,19 @@ class UserService {
     await this._updateTasks(userId);
   }
 
+  /**
+   * @param {String} userId
+   * @returns {Promise<void>}
+   * @private
+   */
   async _updateTasks(userId) {
     const tasks = await this.taskService.getAll();
 
     Promise.all(
       tasks.map(async task => {
-        if (task.getUserId() === userId) {
-          task.setUserId(null);
-          await this.taskService.update(task.getId(), task);
+        if (task.userId === userId) {
+          task.userId = null;
+          await this.taskService.update(task.id, task);
         }
       })
     ).catch(err => {

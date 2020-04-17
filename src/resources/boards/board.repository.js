@@ -1,10 +1,11 @@
+const boardColumnModel = require('./board.column.model');
+
 class BoardRepository {
   /**
    * @param BoardDataMapper
    */
   constructor(BoardDataMapper) {
     this.boardModel = require('./board.model'); // TODO: re-consider this solution
-    this.boardColumnModel = require('./board.column.model'); // TODO: re-consider this solution
     this.boardDataMapper = BoardDataMapper;
   }
 
@@ -34,12 +35,34 @@ class BoardRepository {
   }
 
   async create(board) {
+    if (this._hasColumns(board)) {
+      board.columns = await this._addColumns(board.columns);
+    }
     const createdBoard = await this.boardModel.create(board);
+
     return this.boardDataMapper.toDomain(createdBoard);
   }
 
   async delete(id) {
     return this.boardModel.findOneAndDelete({ _id: id });
+  }
+
+  /**
+   * @param {Array} columns
+   * @returns {Promise<[]>}
+   * @private
+   */
+  async _addColumns(columns) {
+    return columns.map(column => new boardColumnModel(column));
+  }
+
+  /**
+   * @param {Object} board
+   * @returns {boolean}
+   * @private
+   */
+  _hasColumns(board) {
+    return !!board.columns;
   }
 }
 

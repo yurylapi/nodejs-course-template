@@ -2,9 +2,12 @@ const EntityDataMapper = require('../../lib/entity-data-mapper');
 
 class BoardDataMapper extends EntityDataMapper {
   toDomain(entity) {
-    const { id, title, columns } = entity;
-    const columnsToDomain = this._columnsToDomain(columns);
-    return { id, title, columnsToDomain };
+    if (this.isNull(entity)) {
+      return null;
+    }
+    const { id, title } = entity;
+    const columns = this._columnsToDomain(entity.columns);
+    return { id, title, columns };
   }
 
   /**
@@ -14,7 +17,8 @@ class BoardDataMapper extends EntityDataMapper {
    */
   _columnsToDomain(columns) {
     return columns.map(column => {
-      const { _id: id, title, order } = column;
+      const id = column._id || column.id;
+      const { title, order } = column;
       return { id, title, order };
     });
   }

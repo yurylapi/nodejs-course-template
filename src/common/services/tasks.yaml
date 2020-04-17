@@ -1,9 +1,9 @@
 services:
-  task.repository:
-    class: "tasks/task.memory.repository"
-    arguments: ["@task.data-mapper"]
   task.service:
     class: "tasks/task.service"
-    arguments: ["@task.repository", "@board.repository"]
+    arguments: ["@task.repository"]
+  task.repository:
+    class: "tasks/task.repository"
+    arguments: ["@task.data-mapper"]
   task.data-mapper:
     class: "tasks/task.data-mapper"

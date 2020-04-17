@@ -6,6 +6,14 @@ class EntityDataMapper {
   toDalEntity(domain) {
     return domain;
   }
+
+  /**
+   * @param {Object} entity
+   * @returns {boolean}
+   */
+  isNull(entity) {
+    return typeof entity === 'object' && !entity;
+  }
 }
 
 module.exports = EntityDataMapper;
