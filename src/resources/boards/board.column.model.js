@@ -1,32 +1,19 @@
 const uuid = require('uuid');
+const mongoose = require('mongoose');
+const Schema = require('mongoose').Schema;
 
-class BoardColumn {
-  constructor({ id = uuid(), title = 'string', order = 0 } = {}) {
-    this.id = id;
-    this.title = title;
-    this.order = order;
-  }
+const boardColumnSchema = new Schema(
+  {
+    title: String,
+    order: Number,
+    _id: {
+      type: String,
+      default: uuid
+    }
+  },
+  { versionKey: false }
+);
 
-  /**
-   * @return {String}
-   */
-  getId() {
-    return this.id;
-  }
+const BoardColumnModel = mongoose.model('BoardColumn', boardColumnSchema);
 
-  /**
-   * @return {String}
-   */
-  getTitle() {
-    return this.title;
-  }
-
-  /**
-   * @returns {Number}
-   */
-  getOrder() {
-    return this.order;
-  }
-}
-
-module.exports = BoardColumn;
+module.exports = BoardColumnModel;

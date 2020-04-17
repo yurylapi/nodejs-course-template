@@ -1,9 +1,9 @@
 services:
   board.repository:
-    class: "boards/board.memory.repository"
+    class: "boards/board.repository"
     arguments: ["@board.data-mapper"]
   board.service:
     class: "boards/board.service"
-    arguments: ["@board.repository", "@task.repository"]
+    arguments: ["@board.repository", "@task.service"]
   board.data-mapper:
     class: "boards/board.data-mapper"

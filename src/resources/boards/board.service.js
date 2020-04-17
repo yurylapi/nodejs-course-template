@@ -1,7 +1,14 @@
+const { NOT_FOUND, getStatusText } = require('http-status-codes');
+const { ErrorHandler } = require('../../lib/error-handler');
+
 class BoardService {
-  constructor(BoardMemoryRepository, TaskMemoryRepository) {
-    this.boardRepository = BoardMemoryRepository;
-    this.taskRepository = TaskMemoryRepository;
+  /**
+   * @param BoardRepository
+   * @param TaskService
+   */
+  constructor(BoardRepository, TaskService) {
+    this.boardRepository = BoardRepository;
+    this.taskService = TaskService;
   }
 
   async getAll() {
@@ -9,27 +16,42 @@ class BoardService {
   }
 
   async create(boardData) {
-    return this.boardRepository.save(boardData);
+    return this.boardRepository.create(boardData);
   }
 
   async update(boardId, boardData) {
+    const board = await this.boardRepository.getById(boardId);
+    await this._validateBoard(board);
     return this.boardRepository.update(boardId, boardData);
   }
 
   async getById(boardId) {
-    return this.boardRepository.getById(boardId).catch(err => {
-      throw err;
-    });
+    const board = await this.boardRepository.getById(boardId);
+    await this._validateBoard(board);
+    return board;
   }
 
   async delete(boardId) {
-    const tasks = await this.taskRepository.getAll();
+    const board = await this.boardRepository.getById(boardId);
+    await this._validateBoard(board);
+    const tasks = await this.taskService.getAll();
     tasks.map(async task => {
       if (task.getBoardId() === boardId) {
-        await this.taskRepository.delete(task.getId());
+        await this.taskService.delete(task.getId());
       }
     });
     return this.boardRepository.delete(boardId);
+  }
+
+  /**
+   * @param {Object} board
+   * @return {Promise<void>}
+   * @private
+   */
+  async _validateBoard(board) {
+    if (typeof board !== 'object' || !board) {
+      throw new ErrorHandler(NOT_FOUND, getStatusText(NOT_FOUND));
+    }
   }
 }
 
