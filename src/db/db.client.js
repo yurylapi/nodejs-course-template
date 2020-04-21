@@ -53,6 +53,7 @@ const tasks = [...new Array(5)].map((_, idx) => {
 const connectionToDb = callback => {
   mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
     useNewUrlParser: true,
+    useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: false
   });

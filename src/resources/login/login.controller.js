@@ -9,7 +9,7 @@ const authenticateAction = catchErrors(async (req, res) => {
   const { login, password } = body;
   const props = { login, password };
   const loginService = container.get('login.service');
-  const user = await loginService.getUserByProps(props);
+  const user = await loginService.getUserByLoginPassword(props);
   const token = jwt.sign({ login: user.login }, JWT_SECRET_KEY);
   return res.header('Authorization', token).send({ token });
 });
