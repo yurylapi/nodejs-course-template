@@ -14,6 +14,8 @@ const helmet = require('helmet');
 const userRouter = require('./resources/users/user.router');
 const boardRouter = require('./resources/boards/board.router');
 const taskRouter = require('./resources/tasks/task.router');
+const loginRouter = require('./resources/login/login.router');
+const { validateToken } = require('./lib/request.validator');
 const NodeInjectionMiddleware = require('node-dependency-injection-express-middleware')
   .default;
 const accessLogStream = fs.createWriteStream(
@@ -53,8 +55,9 @@ app.use('/', (req, res, next) => {
 
 app.use(reqLoggerMiddleware);
 
-app.use('/users', userRouter);
-app.use('/boards', boardRouter);
+app.use('/login', loginRouter);
+app.use('/users', validateToken, userRouter);
+app.use('/boards', validateToken, boardRouter);
 boardRouter.use('/:boardId/tasks', taskRouter);
 
 app.use((err, req, res, next) => {
