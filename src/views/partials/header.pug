@@ -1,0 +1,10 @@
+header
+    .wrapper
+        .logo
+            img.img(alt='ride4byte', src='/images/r4b-logo-draft.png')
+
+        if currentUser
+            .user-account
+                span #{currentUser.firstname} #{currentUser.lastname}
+                a(href='/user/account/me' class='account-link')
+                    img.img(alt='avatar', src=currentUser.avatar)

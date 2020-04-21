@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  .container
+    include ./partials/header
+
+    .task-list
+        .row
+          .col
+            div(class="card bg-light mb-3")
+                .card-header
+                    img.img(alt='ride4byte', src='/images/icon-bike.png')
+                    span Bike task
+                img.img(alt='ride4byte', src='/images/map2.png')
+                .card-body
+                  p.card-text Bike 40km and earn 500 Mb
+            a(class='btn btn-light' href='#' role='button') Start task
+          .col
+            div(class="card bg-light mb-3")
+                .card-header
+                    img.img(alt='ride4byte', src='/images/icon-run.png')
+                    span Run task
+                img.img(alt='ride4byte', src='/images/map1.png')
+                .card-body
+                  p.card-text Run 40km and earn 500 Mb
+            a(class='btn btn-light' href='#' role='button') Start task
+
+    .usernav
+        if !currentUser
+            a(class='btn btn-login' href='/user/auth/strava' role='button') Connect via
+                img.img(alt='strava', src='/images/strava-logo.png')

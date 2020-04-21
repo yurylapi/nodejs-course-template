@@ -1,0 +1,246 @@
+body {
+  padding: 20px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.logo {
+  max-width: 25%;
+}
+
+header {
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  h1 {
+    display: block;
+    text-align: center;
+  }
+}
+
+.img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.usernav {
+  text-align: center;
+}
+
+.btn {
+  &.btn-login {
+    color: #fff;
+    background-color: #fc4c02;
+    border-color: #fc4c02;
+    font-weight: normal;
+    font-size: 16px;
+
+    &:hover {
+      color: #fff;
+      background-color: #fc4c02;
+      border-color: #e34402;
+    }
+
+    img {
+      width: 70px;
+      margin-left: 3px;
+    }
+  }
+
+  &.btn-light {
+    width: 100%;
+    border-color: #eee;
+  }
+}
+
+.task-list {
+  margin-bottom: 30px;
+
+  .row {
+    margin-bottom: 20px;
+  }
+
+  .card {
+    margin-bottom: 20px;
+  }
+
+  .card-body {
+    color: #212529;
+
+    &:hover {
+      color: #e34402;
+      text-decoration: none;
+    }
+  }
+}
+
+.account-link {
+  img {
+    max-width: 30px;
+    vertical-align: middle;
+    margin-right: 5px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+  }
+
+  span {
+    vertical-align: middle;
+  }
+}
+
+
+//---------------- Account -----------------
+.user-info-container {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+
+  .total {
+    text-align: center;
+  }
+
+  .total-text {
+    font-size: 4rem;
+    font-weight: bold;
+  }
+}
+
+.user-block {
+  display: flex;
+}
+
+.user-info {
+  padding-top: 10px;
+  
+  h6 {
+    display: inline-block;
+    margin: 3px 3px 5px 0;
+  }
+}
+
+.user-pic {
+  width: 100px;
+  max-width: 50%;
+  float: left;
+  margin-right: 20px;
+
+  .img {
+    -webkit-border-radius: 500px;
+    -moz-border-radius: 500px;
+    border-radius: 500px;
+  }
+}
+
+.rewards-list {
+  list-style: none;
+  padding: 0;
+
+  li {
+    display: flex;
+    align-items: center;
+    line-height: 3;
+    justify-content: space-between;
+
+    > div {
+      flex: 1 1 0;
+    }
+
+    .distance {
+      flex: 2 1 0;
+    }
+  }
+
+  .status {
+    font-size: 1.1rem;
+    flex: .8 1 0;
+    line-height: 1.2;
+    color: #999;
+  }
+
+  .comment {
+    font-size: 1.1rem;
+    flex: 1.8 1 0;
+    line-height: 1.2;
+    color: #999;
+  }
+}
+
+.icon {
+  text-align: center;
+  width: 40px;
+  display: inline-block;
+  height: 40px;
+  margin-right: 5px;
+}
+
+.glyphicon {
+  padding: 6px;
+  border-radius: 15px;
+  margin-right: 5px;
+}
+
+.distance {
+  .glyphicon-ok {
+    background: #eee;
+    color: green;
+  }
+}
+
+.bundle {
+  .glyphicon-ok {
+    background: #ffd800;
+    color: green;
+  }
+}
+
+.subtitle {
+  padding-left: 45px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.user-account {
+    span {
+        margin-right: 5px;
+    }
+}
+
+.card-header {
+  padding: .75rem;
+
+  img {
+    max-width: 34px;
+    margin-right: 5px;
+  }
+}
+
+.card-body {
+  padding: .5rem 1rem;
+}
+
+@media (max-width: 480px) {
+  header {
+    h1 {
+      display: none;
+      font-size: 1.6rem;
+      margin-top: 10px;
+    }
+  }
+
+  .user-pic {
+    max-width: 35%;
+    margin-right: 7px;
+  }
+
+  .user-info {
+    font-size: 1.2rem;
+    clear: both;
+  }
+}

@@ -1,0 +1,97 @@
+extends ../layout
+
+block content
+    .container
+        header
+            .wrapper
+                .logo
+                    img.img(alt='ride4byte', src='/images/r4b-logo-draft.png')
+
+        .user-info-container
+            .row
+                div(class='col col-sm-8')
+                    h4= title
+                    .user-pic
+                        img.img(src=avatarUrl)
+                    .user-info
+                        .user-info-line
+                            h6 First Name:
+                            i #{firstname}
+                        .user-info-line
+                            h6 Last Name:
+                            i #{lastname}
+                .col
+                    .total
+                        h4.total-header Total collected
+                        .total-text
+                            p.reward #{stat.total} GB
+
+        if (stat.currentMonthCompleted.ride || stat.currentMonthCompleted.run)
+            h4.subtitle Completed tasks
+            ul.rewards-list
+                if stat.currentMonthCompleted.ride
+                    li
+                        div.distance
+                            span(class='icon')
+                                img.img(alt='ride4byte', src='/images/icon-bike.png')
+                            span(class='glyphicon glyphicon-ok')
+                            span #{stat.currentMonthCompleted.ride.distance}km
+                        div.bundle
+                            span(class='glyphicon glyphicon-ok')
+                            span #{stat.currentMonthCompleted.ride.amount}gb
+                        div.status
+                            span Collect now
+                if stat.currentMonthCompleted.run
+                    li
+                        div.distance
+                            span(class='icon')
+                                img.img(alt='ride4byte', src='/images/icon-run.png')
+                            span(class='glyphicon glyphicon-ok')
+                            span #{stat.currentMonthCompleted.run.distance}km
+                        div.bundle
+                            span(class='glyphicon glyphicon-ok')
+                            span #{stat.currentMonthCompleted.run.amount}mb
+                        div.status
+
+        if (stat.currentMonthProgress.ride || stat.currentMonthProgress.run)
+            h4.subtitle In progress
+            ul.rewards-list
+                if stat.currentMonthProgress.ride
+                    li
+                        div.distance
+                            span(class='icon')
+                                img.img(alt='ride4byte', src='/images/icon-bike.png')
+                            span(class='glyphicon glyphicon-ok')
+                            span #{stat.currentMonthProgress.ride.distance}km
+                        div.comment
+                            span Keep it up!
+                if stat.currentMonthProgress.run
+                    li
+                        div.distance
+                            span(class='icon')
+                                img.img(alt='ride4byte', src='/images/icon-run.png')
+                            span(class='glyphicon glyphicon-ok')
+                            span #{stat.currentMonthProgress.run.distance}km
+                        div.comment
+                            span Almost there!
+            hr
+
+        h4.subtitle History
+        ul.rewards-list
+            each items, month in stat.history
+                div
+                    span #{month}
+                    each item in items
+                        - imgSrc = item.type === 'ride' ? '/images/icon-bike.png' : '/images/icon-run.png';
+                            li
+                                div.distance
+                                    span(class='icon')
+                                        img.img(alt='ride4byte', src=imgSrc)
+                                    span(class='glyphicon glyphicon-ok')
+                                    span #{item.distance}km
+                                div.bundle
+                                    span(class='glyphicon glyphicon-ok')
+                                    span #{item.amount}gb
+                                div.status
+                                    span Collected
+
