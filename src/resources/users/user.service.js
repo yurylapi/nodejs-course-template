@@ -35,9 +35,7 @@ class UserService {
   }
 
   async getUserByProps(props) {
-    const user = await this.userRepository.getUserByProps(props);
-    await this._validateUser(user);
-    return user;
+    return this.userRepository.getUserByProps(props);
   }
 
   /**

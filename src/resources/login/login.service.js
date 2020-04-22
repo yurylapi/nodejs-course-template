@@ -16,6 +16,7 @@ class LoginService {
    */
   async getUserByLoginPassword(props) {
     const { login, password } = props;
+
     const user = await this.userService.getUserByProps({ login });
 
     if (!user) {

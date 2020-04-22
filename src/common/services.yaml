@@ -2,4 +2,5 @@ imports:
   - { resource: services/boards.yaml }
   - { resource: services/tasks.yaml }
   - { resource: services/users.yaml }
+  - { resource: services/login.yaml }
 
