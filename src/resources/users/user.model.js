@@ -27,6 +27,11 @@ userSchema.pre('save', async function preSave(next) {
   next();
 });
 
+userSchema.pre('findOneAndUpdate', async function preUpdate(next) {
+  this._update.password = await bcrypt.hash(this._update.password, 8);
+  next();
+});
+
 const UserModel = mongoose.model('User', userSchema);
 
 module.exports = UserModel;
