@@ -34,6 +34,10 @@ class UserService {
     await this._updateTasks(userId);
   }
 
+  async getUserByProps(props) {
+    return this.userRepository.getUserByProps(props);
+  }
+
   /**
    * @param {String} userId
    * @returns {Promise<void>}

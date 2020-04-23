@@ -1,0 +1,4 @@
+services:
+  login.service:
+    class: "login/login.service"
+    arguments: ["@user.service"]

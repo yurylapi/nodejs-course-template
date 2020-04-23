@@ -18,7 +18,7 @@ class UserRepository {
   }
 
   async getUserByProps(props) {
-    return this.userModel.find(props);
+    return this.userModel.findOne(props).exec();
   }
 
   async update(userId, user) {
